@@ -24,7 +24,7 @@ module Fixtures
       instance
     end
 
-    def call(event_type=nil, block)
+    def call(event_type=nil, &block)
       if event_type
         block = proc { |event_data| event_data.type == event_type }
       end
