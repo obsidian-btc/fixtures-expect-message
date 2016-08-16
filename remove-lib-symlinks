@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+source ./library-symlinks.sh
+
+remove_lib_symlinks 'expect_reply' 'fixtures'

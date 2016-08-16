@@ -1,8 +1,8 @@
 # -*- encoding: utf-8 -*-
 Gem::Specification.new do |s|
-  s.name = 'fixtures-expect-reply'
+  s.name = 'fixtures-expect_reply'
   s.version = '0.0.0.0'
-  s.summary = 'fixtures-expect-reply'
+  s.summary = 'Expect reply fixture'
   s.description = ' '
 
   s.authors = ['Obsidian Software, Inc']
@@ -15,4 +15,6 @@ Gem::Specification.new do |s|
   s.platform = Gem::Platform::RUBY
   s.required_ruby_version = '>= 2.2.3'
   s.bindir = 'bin'
+
+  s.add_runtime_dependency 'event_store-client-http'
 end

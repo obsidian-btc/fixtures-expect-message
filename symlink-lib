@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+source ./library-symlinks.sh
+
+symlink_lib 'expect_reply' 'fixtures'
