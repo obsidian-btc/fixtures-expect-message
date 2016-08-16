@@ -2,4 +2,4 @@
 
 source ./library-symlinks.sh
 
-symlink_lib 'expect_reply' 'fixtures'
+symlink_lib 'expect_message' 'fixtures'

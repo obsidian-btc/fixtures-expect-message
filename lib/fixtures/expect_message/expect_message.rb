@@ -1,27 +1,19 @@
-require 'event_store/client/http'
-
 module Fixtures
-  class ExpectReply
+  class ExpectMessage
     include Telemetry::Logger::Dependency
 
     attr_accessor :position
-    attr_reader :reply_stream_name
+    attr_reader :stream_name
 
     dependency :session, EventStore::Client::HTTP::Session
 
-    def initialize(reply_stream_name)
-      @reply_stream_name = reply_stream_name
+    def initialize(stream_name)
+      @stream_name = stream_name
       @position = 0
     end
 
-    def self.build(session: nil)
-      stream_id = Identifier::UUID::Random.get
-
-      reply_stream_name = "fixturesExpectReply-#{stream_id}"
-
-      instance = new reply_stream_name
-      EventStore::Client::HTTP::Session.configure instance, session: session
-      instance
+    def configure_dependencies
+      EventStore::Client::HTTP::Session.configure self, session: session
     end
 
     def call(event_type=nil, &block)
@@ -31,7 +23,7 @@ module Fixtures
 
       get_reader.each do |event_data|
         if block.(event_data)
-          logger.info "Received expected reply (Type: #{event_data.type})"
+          logger.info "Received expected message (Type: #{event_data.type})"
           return
         end
 
@@ -49,7 +41,7 @@ module Fixtures
 
     def get_reader
       EventStore::Client::HTTP::Subscription.build(
-        reply_stream_name,
+        stream_name,
         starting_position: position,
         session: session
       )
