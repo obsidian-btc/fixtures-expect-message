@@ -7,7 +7,7 @@ module Fixtures
         stream_name = "fixturesExpectMessage-#{stream_id}"
 
         instance = new stream_name
-        instance.configure_dependencies
+        instance.configure_dependencies session: session
         instance
       end
     end
