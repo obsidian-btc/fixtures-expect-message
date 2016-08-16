@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 Gem::Specification.new do |s|
   s.name = 'fixtures-expect_message'
-  s.version = '0.0.0.0'
+  s.version = '0.1.0.0'
   s.summary = 'Expect message fixture'
   s.description = ' '
 
