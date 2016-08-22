@@ -31,7 +31,7 @@ bundle_command="BUNDLE_IGNORE_CONFIG=on GEM_PATH=$installed_packages_dir/rubygem
   $installed_packages_dir/bin/bundle
   --path=$installed_packages_dir
   --binstubs=$installed_packages_dir/bin
-  --clean --standalone"
+  --standalone"
 
 if [ $POSTURE = 'operational' ]; then
   bundle_command="$bundle_command --without=development"
