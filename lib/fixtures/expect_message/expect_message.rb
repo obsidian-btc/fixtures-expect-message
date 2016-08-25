@@ -22,7 +22,8 @@ module Fixtures
       EventStore::Client::HTTP::Session.configure self, session: session
     end
 
-    def call(event_type=nil, &block)
+    def call(event_type=nil, retries: nil, &block)
+      retries ||= 0
       block ||= proc { true }
 
       if event_type
@@ -33,22 +34,32 @@ module Fixtures
         }
       end
 
-      get_reader.each do |event_data|
-        if block.(event_data)
-          logger.info "Received expected message (Type: #{event_data.type})"
-          return
+      begin
+        get_reader.each do |event_data|
+          if block.(event_data)
+            logger.info "Received expected message (Type: #{event_data.type})"
+            return
+          end
+
+          error_message = "Next message written did not match expectation (ActualType: #{event_data.type.inspect}, ExpectedType: #{event_type.inspect})"
+          logger.error error_message
+
+          json_text = JSON.pretty_generate event_data.data.to_h
+          logger.error json_text
+
+          raise ExpectationNotMet, error_message
         end
 
-        error_message = "Next message written did not match expectation (ActualType: #{event_data.type.inspect}, ExpectedType: #{event_type.inspect})"
-        logger.error error_message
+        raise MessageNotWritten, "Message never written; is the component running?"
 
-        json_text = JSON.pretty_generate event_data.data.to_h
-        logger.error json_text
-
-        raise ExpectationNotMet, error_message
+      rescue MessageNotWritten
+        if retries > 0
+          retries -= 1
+          retry
+        else
+          raise
+        end
       end
-
-      raise ExpectationNotMet, "Reply never written; is the component running?"
 
     ensure
       self.position += 1
@@ -63,5 +74,6 @@ module Fixtures
     end
 
     ExpectationNotMet = Class.new StandardError
+    MessageNotWritten = Class.new StandardError
   end
 end
