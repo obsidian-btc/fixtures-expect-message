@@ -57,7 +57,7 @@ module Fixtures
         end
       end
 
-      ensure
+    ensure
       self.position += 1
     end
 
