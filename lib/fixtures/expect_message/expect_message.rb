@@ -22,8 +22,8 @@ module Fixtures
       EventStore::Client::HTTP::Session.configure self, session: session
     end
 
-    def call(event_type=nil, tries: nil, &block)
-      tries ||= 1
+    def call(event_type=nil, retries: nil, &block)
+      retries ||= 0
       block ||= proc { true }
 
       if event_type
@@ -34,7 +34,7 @@ module Fixtures
         }
       end
 
-      loop do
+      begin
         get_reader.each do |event_data|
           if block.(event_data)
             logger.info "Received expected message (Type: #{event_data.type})"
@@ -50,10 +50,14 @@ module Fixtures
           raise ExpectationNotMet, error_message
         end
 
-        if tries == 1
-          raise ExpectationNotMet, "Reply never written; is the component running?"
+        raise MessageNotWritten, "Message never written; is the component running?"
+
+      rescue MessageNotWritten
+        if retries > 0
+          retries -= 1
+          retry
         else
-          tries -= 1
+          raise
         end
       end
 
@@ -70,5 +74,6 @@ module Fixtures
     end
 
     ExpectationNotMet = Class.new StandardError
+    MessageNotWritten = Class.new StandardError
   end
 end
