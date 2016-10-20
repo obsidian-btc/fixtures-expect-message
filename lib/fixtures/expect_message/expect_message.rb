@@ -18,6 +18,11 @@ module Fixtures
       instance
     end
 
+    def self.call(stream_name, event_type=nil, retries: nil, session: nil, &block)
+      instance = build stream_name, session: session
+      instance.(event_type, retries: retries, &block)
+    end
+
     def configure_dependencies(session: nil)
       EventStore::Client::HTTP::Session.configure self, session: session
     end
