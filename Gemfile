@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 
 source 'https://gem.fury.io/eventide' do
-  gem 'event_store-client-http'
+  gem 'event_store-messaging'
 end
 
 group :development do
