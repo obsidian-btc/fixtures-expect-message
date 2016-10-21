@@ -50,7 +50,7 @@ module Fixtures
       end
 
       messages_read = 0
-      types = event_types
+      types = event_types.dup
 
       begin
         get_reader.each do |event_data|
