@@ -9,6 +9,12 @@ module Fixtures
         class SomeEventType
           include EventStore::Messaging::Message
         end
+
+        module EventType
+          def self.example
+            SomeEventType.message_type
+          end
+        end
       end
     end
   end

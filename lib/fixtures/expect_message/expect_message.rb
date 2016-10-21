@@ -43,7 +43,7 @@ module Fixtures
         get_reader.each do |event_data|
           if block.(event_data)
             logger.info "Received expected message (Type: #{event_data.type})"
-            return
+            return true
           end
 
           error_message = "Next message written did not match expectation (ActualType: #{event_data.type.inspect}, ExpectedType: #{event_type.inspect})"

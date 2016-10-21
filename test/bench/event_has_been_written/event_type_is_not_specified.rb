@@ -7,7 +7,7 @@ context "Event has been written, event type is not specified" do
 
   test "No error is raised" do
     refute proc { expect_message.() } do
-      raises_error? Fixtures::ExpectMessage::MessageNotWritten
+      raises_error?
     end
   end
 end
