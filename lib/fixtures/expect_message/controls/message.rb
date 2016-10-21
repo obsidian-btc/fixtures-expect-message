@@ -6,13 +6,23 @@ module Fixtures
           SomeEventType.build
         end
 
-        class SomeEventType
+        class SomeEvent
+          include EventStore::Messaging::Message
+        end
+
+        class SomeOtherEvent
           include EventStore::Messaging::Message
         end
 
         module EventType
           def self.example
-            SomeEventType.message_type
+            SomeEvent.message_type
+          end
+        end
+
+        module OtherEventType
+          def self.example
+            SomeOtherEvent.message_type
           end
         end
       end

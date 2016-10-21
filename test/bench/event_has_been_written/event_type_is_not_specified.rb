@@ -6,8 +6,6 @@ context "Event has been written, event type is not specified" do
   expect_message = Fixtures::ExpectMessage::Controls::ExpectMessage.example stream_name
 
   test "No error is raised" do
-    refute proc { expect_message.() } do
-      raises_error?
-    end
+    assert expect_message.()
   end
 end
