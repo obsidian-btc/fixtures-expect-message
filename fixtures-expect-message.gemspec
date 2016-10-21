@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 Gem::Specification.new do |s|
   s.name = 'fixtures-expect_message'
-  s.version = '0.1.1.0'
+  s.version = '0.1.2.0'
   s.summary = 'Expect message fixture'
   s.description = ' '
 
@@ -16,5 +16,5 @@ Gem::Specification.new do |s|
   s.required_ruby_version = '>= 2.2.3'
   s.bindir = 'bin'
 
-  s.add_runtime_dependency 'event_store-client-http'
+  s.add_runtime_dependency 'event_store-messaging'
 end
