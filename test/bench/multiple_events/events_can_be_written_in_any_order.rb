@@ -45,7 +45,7 @@ context "Multiple events, events can be written in any order" do
     expect_message = Fixtures::ExpectMessage::Controls::ExpectMessage.example stream_name
 
     test "Error is raised" do
-      assert proc { expect_message.(['WrongEventType', 'OtherWrongEventType'], any_order: true) } do
+      assert proc { expect_message.('WrongEventType', any_order: true) } do
         raises_error? Fixtures::ExpectMessage::ExpectationNotMet
       end
     end
