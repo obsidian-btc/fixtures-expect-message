@@ -18,9 +18,9 @@ module Fixtures
       instance
     end
 
-    def self.call(stream_name, event_type=nil, retries: nil, session: nil, &block)
+    def self.call(stream_name, event_types=nil, retries: nil, session: nil, any_order: nil, &block)
       instance = build stream_name, session: session
-      instance.(event_type, retries: retries, &block)
+      instance.(event_types, retries: retries, any_order: any_order, &block)
     end
 
     def configure_dependencies(session: nil)
