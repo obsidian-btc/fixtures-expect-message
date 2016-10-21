@@ -31,7 +31,6 @@ module Fixtures
       event_types ||= []
       event_types = event_types.is_a?(Array) ? event_types : [event_types]
       retries ||= 0
-      any_order ||= false
       block ||= proc { true }
 
       messages_count = event_types.count
@@ -78,13 +77,9 @@ module Fixtures
           raise ExpectationNotMet, error_message
         end
 
-        if any_order
-          not_written_message = ""
-        else
-          not_written_message = ""
-        end
+        not_written_message = "MessagesWritten: #{event_types - types}, MessagesNotWritten: #{types}"
 
-        raise MessageNotWritten, "Message never written; is the component running?"
+        raise MessageNotWritten, "Message never written; is the component running? #{not_written_message}"
 
       rescue MessageNotWritten
         if retries > 0
