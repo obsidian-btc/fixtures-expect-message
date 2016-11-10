@@ -34,23 +34,23 @@ module Fixtures
       block ||= proc { true }
 
       messages_count = event_types.count
+      types = event_types.dup
 
       if messages_count > 0 && any_order
         inner_block = block
 
         block = proc { |event_data|
-          event_types.include?(event_data.type) && inner_block.(event_data.data)
+          types.include?(event_data.type) && inner_block.(event_data.data)
         }
       elsif messages_count > 0
         inner_block = block
 
         block = proc { |event_data|
-          event_types[0] == event_data.type && inner_block.(event_data.data)
+          types[0] == event_data.type && inner_block.(event_data.data)
         }
       end
 
       messages_read = 0
-      types = event_types.dup
 
       begin
         get_reader.each do |event_data|
