@@ -1,6 +1,6 @@
 module Fixtures
   class ExpectMessage
-    include Telemetry::Logger::Dependency
+    include Log::Dependency
 
     attr_accessor :position
     attr_reader :stream_name

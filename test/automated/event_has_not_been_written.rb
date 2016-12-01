@@ -1,7 +1,7 @@
-require_relative './bench_init'
+require_relative './automated_init'
 
 context "Event has not been written" do
-  expect_message = Fixtures::ExpectMessage::Controls::ExpectMessage.example terminal_reader: true
+  expect_message = Controls::ExpectMessage.example terminal_reader: true
 
   test "Error is raised" do
     assert proc { expect_message.() } do
