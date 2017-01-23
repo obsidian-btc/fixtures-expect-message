@@ -1,5 +1,5 @@
-require 'event_store/messaging'
-require 'identifier/uuid/controls'
+require 'messaging/event_store'
+require 'messaging/controls'
 
 require 'fixtures/expect_message/controls/event_types'
 require 'fixtures/expect_message/controls/expect_message'

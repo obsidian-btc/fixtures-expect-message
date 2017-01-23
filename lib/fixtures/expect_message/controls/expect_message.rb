@@ -9,9 +9,9 @@ module Fixtures
 
           if terminal_reader
             def instance.get_reader
-              EventStore::Client::HTTP::StreamReader::Terminal.build(
+              EventSource::EventStore::HTTP::Read.build(
                 stream_name,
-                starting_position: position,
+                position: position,
                 session: session
               )
             end

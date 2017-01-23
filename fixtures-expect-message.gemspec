@@ -16,5 +16,5 @@ Gem::Specification.new do |s|
   s.required_ruby_version = '>= 2.2.3'
   s.bindir = 'bin'
 
-  s.add_runtime_dependency 'event_store-messaging'
+  s.add_runtime_dependency 'evt-messaging-event_store'
 end

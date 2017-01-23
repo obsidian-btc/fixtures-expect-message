@@ -6,7 +6,7 @@ module Fixtures
           stream_id = Identifier::UUID::Controls::Random.example
           category = 'someCategory'
 
-          EventStore::Messaging::StreamName.stream_name stream_id, category
+          Messaging::StreamName.stream_name stream_id, category
         end
       end
     end

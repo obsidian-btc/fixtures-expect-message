@@ -5,7 +5,7 @@ module Fixtures
     attr_accessor :position
     attr_reader :stream_name
 
-    dependency :session, EventStore::Client::HTTP::Session
+    dependency :session, EventSource::EventStore::HTTP::Session
 
     def initialize(stream_name)
       @stream_name = stream_name
@@ -24,7 +24,7 @@ module Fixtures
     end
 
     def configure_dependencies(session: nil)
-      EventStore::Client::HTTP::Session.configure self, session: session
+      EventSource::EventStore::HTTP::Session.configure self, session: session
     end
 
     def call(event_types=nil, retries: nil, any_order: nil, &block)
@@ -53,7 +53,7 @@ module Fixtures
       messages_read = 0
 
       begin
-        get_reader.each do |event_data|
+        get_reader.() do |event_data|
           messages_read += 1
 
           if block.(event_data)
@@ -95,10 +95,12 @@ module Fixtures
     end
 
     def get_reader
-      EventStore::Client::HTTP::Subscription.build(
+      EventSource::EventStore::HTTP::Read.build(
         stream_name,
-        starting_position: position,
-        session: session
+        position: position,
+        session: session,
+        cycle_timeout_milliseconds: nil,
+        cycle_maximum_milliseconds: 1000
       )
     end
 

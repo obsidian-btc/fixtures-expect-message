@@ -7,11 +7,11 @@ module Fixtures
         end
 
         class SomeEvent
-          include EventStore::Messaging::Message
+          include Messaging::Message
         end
 
         class SomeOtherEvent
-          include EventStore::Messaging::Message
+          include Messaging::Message
         end
 
         module EventType

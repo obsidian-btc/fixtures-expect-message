@@ -13,8 +13,8 @@ module Fixtures
 
           stream_name = StreamName.example
 
-          writer = EventStore::Messaging::Writer.build
-          writer.write messages, stream_name
+          write = Messaging::EventStore::Write.build
+          write.(messages, stream_name)
 
           stream_name
         end
